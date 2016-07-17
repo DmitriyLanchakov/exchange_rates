@@ -10,7 +10,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandler;
 
 /**
  * Курсы валют
@@ -21,7 +20,7 @@ use AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandler;
  *      "comment"="Курсы валют"
  *  }
  * )
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ExchangeRate")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ExchangeRateRepository")
  * @ORM\HasLifecycleCallbacks()
  *
  * @author rtretyakov

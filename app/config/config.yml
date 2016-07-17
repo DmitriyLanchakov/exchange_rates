@@ -42,7 +42,7 @@ doctrine:
         mapping_types:
             enum: string
         types:
-            ExchangeRatesSourceReceiveHandler: AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandler
+            ExchangeRatesSourceReceiveHandlerType: AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandlerType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

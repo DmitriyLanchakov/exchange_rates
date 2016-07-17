@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityRepository;
  * @author rtretyakov
  * @link https://github.com/rtretyakov/exchange_rates
  */
-class Currency extends EntityRepository
+class CurrencyRepository extends EntityRepository
 {
 
 }

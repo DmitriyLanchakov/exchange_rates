@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      "comment"="Валюты"
  *  }
  * )
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Currency")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CurrencyRepository")
  *
  * @author rtretyakov
  * @link https://github.com/rtretyakov/exchange_rates

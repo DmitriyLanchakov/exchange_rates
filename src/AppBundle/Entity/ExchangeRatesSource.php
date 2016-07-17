@@ -10,7 +10,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandler;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -22,7 +21,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *      "comment"="Источники курсов валют"
  *  }
  * )
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ExchangeRatesSource")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ExchangeRatesSourceRepository")
  *
  * @author rtretyakov
  * @link https://github.com/rtretyakov/exchange_rates
@@ -79,13 +78,12 @@ class ExchangeRatesSource
      *
      * @ORM\Column(
      *  name="receive_handler",
-     *  type="ExchangeRatesSourceReceiveHandler",
+     *  type="ExchangeRatesSourceReceiveHandlerType",
      *  nullable=false,
      *  options={
      *      "comment"="Хэндлер получения курсов"
      *  }
      * )
-     * @DoctrineAssert\Enum(entity="ExchangeRatesSourceReceiveHandler")
      *
      * @var string
      */

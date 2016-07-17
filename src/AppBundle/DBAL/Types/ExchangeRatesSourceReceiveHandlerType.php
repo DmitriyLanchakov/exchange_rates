@@ -17,13 +17,15 @@ use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
  * @author rtretyakov
  * @link https://github.com/rtretyakov/exchange_rates
  */
-class ExchangeRatesSourceReceiveHandler extends AbstractEnumType
+class ExchangeRatesSourceReceiveHandlerType extends AbstractEnumType
 {
+    const CBR = 'cbr';
+
     /** {@inheritdoc} */
-    protected $name = 'exchange_rates_source_receive_handler';
+    protected $name = 'exchange_rates_source_receive_handler_type';
 
     /** {@inheritdoc} */
     protected static $choices = [
-        'test' => 'test',
+        self::CBR => 'Центральный Банк Российской Федерации',
     ];
 }
