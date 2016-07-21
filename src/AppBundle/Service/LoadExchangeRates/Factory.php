@@ -11,6 +11,7 @@ namespace AppBundle\Service\LoadExchangeRates;
 
 use AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandlerType;
 use AppBundle\Service\LoadExchangeRates\Handlers\Cbr;
+use AppBundle\Service\LoadExchangeRates\Handlers\NationalBankKz;
 use AppBundle\Entity\ExchangeRatesSource;
 use AppBundle\Manager\CurrencyManager;
 use Psr\Log\LoggerInterface;
@@ -30,6 +31,7 @@ class Factory
      */
     protected static $handlers = [
         ExchangeRatesSourceReceiveHandlerType::CBR => Cbr::class,
+        ExchangeRatesSourceReceiveHandlerType::NATIONAL_BANK_KZ => NationalBankKz::class,
     ];
 
     /**

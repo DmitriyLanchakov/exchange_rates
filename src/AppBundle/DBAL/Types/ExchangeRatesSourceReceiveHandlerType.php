@@ -20,9 +20,11 @@ use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 class ExchangeRatesSourceReceiveHandlerType extends AbstractEnumType
 {
     const CBR = 'cbr';
+    const NATIONAL_BANK_KZ = 'national_bank_kz';
 
     /** {@inheritdoc} */
     protected static $choices = [
         self::CBR => 'Центральный Банк Российской Федерации',
+        self::NATIONAL_BANK_KZ => 'Национальный Банк Казахстана',
     ];
 }

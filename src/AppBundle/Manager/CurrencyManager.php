@@ -34,7 +34,7 @@ class CurrencyManager extends AbstractManager
      *
      * @return \AppBundle\Entity\Currency[]
      */
-    public function findAllIndexed()
+    public function findAllIndexedById()
     {
         $currencies = $this->findAll();
 
@@ -43,6 +43,25 @@ class CurrencyManager extends AbstractManager
         /** @var Currency $currency */
         foreach ($currencies as $currency) {
             $result[$currency->getId()] = $currency;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Возвращает все валюты в индексированном по тэгам массиве
+     *
+     * @return \AppBundle\Entity\Currency[]
+     */
+    public function findAllIndexedByTag()
+    {
+        $currencies = $this->findAll();
+
+        $result = [];
+
+        /** @var Currency $currency */
+        foreach ($currencies as $currency) {
+            $result[$currency->getTag()] = $currency;
         }
 
         return $result;
