@@ -26,7 +26,7 @@ class Cbr extends AbstractHandler implements HandlerInterface
     /** {@inheritdoc} */
     public function getRates()
     {
-        $request = new Request('POST', $this->exchangeRatesSource->getReceiveUrl());
+        $request = new Request('GET', $this->exchangeRatesSource->getReceiveUrl());
 
         $response = $this->sendRequest($request);
 
@@ -48,9 +48,7 @@ class Cbr extends AbstractHandler implements HandlerInterface
     {
         if (200 === $response->getStatusCode()) {
             $entityLoaderState = libxml_disable_entity_loader(true);
-
             $responseXml = simplexml_load_string((string) $response->getBody());
-
             libxml_disable_entity_loader($entityLoaderState);
 
             $currencies = $this->currencyManager->findAllIndexedById();
@@ -61,15 +59,18 @@ class Cbr extends AbstractHandler implements HandlerInterface
                 foreach ($responseXml->children() as $rateInfo) {
                     if (isset($rateInfo->NumCode, $rateInfo->Value)
                         && array_key_exists((int) $rateInfo->NumCode, $currencies)
-                        && false !== $value = numfmt_parse(
-                            new \NumberFormatter('ru', \NumberFormatter::DECIMAL),
-                            (string) $rateInfo->Value
+                        && false !== (
+                            $value = numfmt_parse(
+                                new \NumberFormatter('ru', \NumberFormatter::DECIMAL),
+                                (string) $rateInfo->Value
+                            )
                         )
+                        && false !== ($scale = filter_var((string) $rateInfo->Nominal, FILTER_VALIDATE_FLOAT))
                     ) {
                         $rates[] = (new ExchangeRate())
                             ->setExchangeRatesSource($this->exchangeRatesSource)
                             ->setToCurrency($currencies[(int) $rateInfo->NumCode])
-                            ->setValue($value);
+                            ->setValue($scale / $value);
                     }
                 }
 
