@@ -9,13 +9,12 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Manager\ExchangeRatesSourceManager;
+use AppBundle\Service\LoadExchangeRates\Factory as HandlersFactory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use AppBundle\Service\LoadExchangeRates\Factory as HandlersFactory;
-use AppBundle\Manager\ExchangeRatesSourceManager;
-use AppBundle\Manager\ExchangeRateManager;
 
 /**
  * Задача загрузки курсов валют
@@ -41,8 +40,6 @@ class LoadExchangeRatesCommand extends ContainerAwareCommand
 
         /** @var ExchangeRatesSourceManager $exchangeRatesSourceManager */
         $exchangeRatesSourceManager = $this->getContainer()->get('app.manager.exchange_rates_source');
-        /** @var ExchangeRateManager $exchangeRateManager */
-        $exchangeRateManager = $this->getContainer()->get('app.manager.exchange_rate');
 
         $sources = null === $sourceId
             ? $exchangeRatesSourceManager->findAll()
@@ -50,7 +47,11 @@ class LoadExchangeRatesCommand extends ContainerAwareCommand
 
         foreach ($sources as $source) {
             try {
-                $handler = HandlersFactory::getHandler($source);
+                $handler = HandlersFactory::getHandler(
+                    $source,
+                    $this->getContainer()->get('app.manager.currency'),
+                    $this->getContainer()->get('logger')
+                );
 
                 $rates = $handler->getRates();
 
@@ -63,7 +64,7 @@ class LoadExchangeRatesCommand extends ContainerAwareCommand
                 continue;
             }
 
-            $exchangeRateManager->saveRates($rates);
+            $this->getContainer()->get('app.manager.exchange_rate')->saveRates($rates);
 
             $output->writeln(sprintf('%s rates was successfully load', $source->getReceiveHandler()));
         }

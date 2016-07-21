@@ -87,6 +87,24 @@ class ExchangeRate
     protected $toCurrency;
 
     /**
+     * Значение курса
+     *
+     * @ORM\Column(
+     *  name="value",
+     *  type="decimal",
+     *  precision=20,
+     *  scale=8,
+     *  nullable=false,
+     *  options={
+     *      "comment"="Значение курса"
+     *  }
+     * )
+     *
+     * @var float
+     */
+    protected $value;
+
+    /**
      * Возвращает время создания
      *
      * @ORM\Column(
@@ -153,6 +171,30 @@ class ExchangeRate
     public function setToCurrency(Currency $toCurrency)
     {
         $this->toCurrency = $toCurrency;
+
+        return $this;
+    }
+
+    /**
+     * Возвращает значение курса
+     *
+     * @return float
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Устанавливает значение курса
+     *
+     * @param float $value Значение курса
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
 
         return $this;
     }

@@ -39,7 +39,8 @@ class ExchangeRatesSource
      *      "comment"="ID записи"
      *  }
      * )
-     * @ORM\Id
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var int
      */

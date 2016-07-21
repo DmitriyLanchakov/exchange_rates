@@ -11,7 +11,9 @@ namespace AppBundle\Service\LoadExchangeRates;
 
 use AppBundle\DBAL\Types\ExchangeRatesSourceReceiveHandlerType;
 use AppBundle\Service\LoadExchangeRates\Handlers\Cbr;
-use AppBundle\Entity\ExchangeRatesSource as ExchangeRatesSourceEntity;
+use AppBundle\Entity\ExchangeRatesSource;
+use AppBundle\Manager\CurrencyManager;
+use Psr\Log\LoggerInterface;
 
 /**
  * Фабрика хэндлеров для получения курсов
@@ -33,16 +35,21 @@ class Factory
     /**
      * Возвращает хэндлер для получения курсов
      *
-     * @param ExchangeRatesSourceEntity $source Источник курсов валют
+     * @param ExchangeRatesSource $source Источник курсов валют
+     * @param CurrencyManager $currencyManager Менеджер валют
+     * @param LoggerInterface $logger Логгер
      *
      * @return Handler
      *
      * @throws \InvalidArgumentException
      */
-    public static function getHandler(ExchangeRatesSourceEntity $source)
-    {
+    public static function getHandler(
+        ExchangeRatesSource $source,
+        CurrencyManager $currencyManager,
+        LoggerInterface $logger
+    ) {
         if (array_key_exists($source->getReceiveHandler(), static::$handlers)) {
-            return new static::$handlers[$source->getReceiveHandler()]($source);
+            return new static::$handlers[$source->getReceiveHandler()]($source, $currencyManager, $logger);
         }
 
         throw new \InvalidArgumentException;

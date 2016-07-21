@@ -10,6 +10,11 @@
 namespace AppBundle\Service\LoadExchangeRates;
 
 use AppBundle\Entity\ExchangeRatesSource;
+use AppBundle\Manager\CurrencyManager;
+use GuzzleHttp\Client;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Абстрактный класс хэндлеров для получения курсов валют
@@ -27,10 +32,62 @@ abstract class AbstractHandler
     protected $exchangeRatesSource;
 
     /**
-     * @param ExchangeRatesSource $exchangeRatesSource Источник курсов валют
+     * Менеджер валют
+     *
+     * @var CurrencyManager
      */
-    public function __construct(ExchangeRatesSource $exchangeRatesSource)
+    protected $currencyManager;
+
+    /**
+     * HTTP-клиент
+     *
+     * @var Client
+     */
+    protected $httpClient;
+
+    /**
+     * @param ExchangeRatesSource $exchangeRatesSource Источник курсов валют
+     * @param CurrencyManager $currencyManager Менеджер валют
+     * @param LoggerInterface $logger Логгер
+     */
+    public function __construct(
+        ExchangeRatesSource $exchangeRatesSource,
+        CurrencyManager $currencyManager,
+        LoggerInterface $logger
+    ) {
+        $this->exchangeRatesSource = $exchangeRatesSource;
+        $this->currencyManager = $currencyManager;
+        $this->logger = $logger;
+        $this->httpClient = new Client;
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return ResponseInterface
+     */
+    public function sendRequest(RequestInterface $request)
     {
-        $this->$exchangeRatesSource = $exchangeRatesSource;
+        $this->logger->info(
+            sprintf('Request %s', static::class),
+            [
+                'url' => $request->getUri()->getPath(),
+                'method' => $request->getMethod(),
+                'body' => (string) $request->getBody(),
+            ]
+        );
+
+        /** @var ResponseInterface $response */
+        $response = $this->httpClient->send($request);
+
+        $this->logger->info(
+            sprintf('Response %s', static::class),
+            [
+                'status_code' => $response->getStatusCode(),
+                'body' => (string) $response->getBody(),
+            ]
+        );
+
+        return $response;
     }
 }

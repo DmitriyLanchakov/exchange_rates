@@ -22,9 +22,6 @@ class ExchangeRatesSourceReceiveHandlerType extends AbstractEnumType
     const CBR = 'cbr';
 
     /** {@inheritdoc} */
-    protected $name = 'exchange_rates_source_receive_handler_type';
-
-    /** {@inheritdoc} */
     protected static $choices = [
         self::CBR => 'Центральный Банк Российской Федерации',
     ];
