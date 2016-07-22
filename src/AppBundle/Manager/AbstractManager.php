@@ -45,6 +45,21 @@ abstract class AbstractManager
     }
 
     /**
+     * Возвращает сущности по критериям
+     *
+     * @param array $criteria Критерии
+     * @param array $orderBy Сортировка
+     * @param integer|null $limit Лимит
+     * @param integer|null $offset Смещение
+     *
+     * @return array
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->getRepository()->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
      * Возвращает менеджер сущностей
      *
      * @return EntityManager

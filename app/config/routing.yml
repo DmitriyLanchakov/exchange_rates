@@ -1,0 +1,14 @@
+app_currency_api:
+    resource: "@AppBundle/Controller/Api/CurrencyController.php"
+    type:     rest
+    prefix:   /api
+
+app_exchange_rate_api:
+    resource: "@AppBundle/Controller/Api/ExchangeRateController.php"
+    type:     rest
+    prefix:   /api
+
+app_exchange_rates_source_api:
+    resource: "@AppBundle/Controller/Api/ExchangeRatesSourceController.php"
+    type:     rest
+    prefix:   /api
