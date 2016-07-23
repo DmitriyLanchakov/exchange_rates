@@ -10,6 +10,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Сущность валюты
@@ -40,6 +41,9 @@ class Currency
      * )
      * @ORM\Id()
      *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
+     *
      * @var int
      */
     protected $id;
@@ -58,18 +62,36 @@ class Currency
      *  }
      * )
      *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=3)
+     *
      * @var string
      */
     protected $tag;
 
     /**
-     * Возвращает ID валюты
+     * Возвращает ID
      *
      * @return int
      */
     public function getId()
     {
         return (int) $this->id;
+    }
+
+    /**
+     * Устанавливает ID
+     *
+     * @param int $id ID
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = (int) $id;
+
+        return $this;
     }
 
     /**

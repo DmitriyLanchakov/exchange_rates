@@ -11,6 +11,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Сущность источника курсов валют
@@ -57,18 +58,24 @@ class ExchangeRatesSource
      *  }
      * )
      *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     *
      * @var string
      */
     protected $title;
 
     /**
      * @ORM\Column(
-     *  name="receive_url",
+     *  name="receiveUrl",
      *  type="string",
      *  options={
      *      "comment"="URL для получения курсов"
      *  }
      * )
+     *
+     * @Assert\NotBlank()
+     * @Assert\Url()
      *
      * @var string
      */
@@ -78,7 +85,7 @@ class ExchangeRatesSource
      * Хэндлер получения курсов
      *
      * @ORM\Column(
-     *  name="receive_handler",
+     *  name="receiveHandler",
      *  type="ExchangeRatesSourceReceiveHandlerType",
      *  nullable=false,
      *  options={
@@ -99,7 +106,7 @@ class ExchangeRatesSource
      * @ORM\JoinColumns(
      *  {
      *      @ORM\JoinColumn(
-     *          name="base_currency_id",
+     *          name="baseCurrencyId",
      *          referencedColumnName="id"
      *      )
      *  }

@@ -10,6 +10,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Курсы валют
@@ -99,6 +100,9 @@ class ExchangeRate
      *      "comment"="Значение курса"
      *  }
      * )
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="numeric")
      *
      * @var float
      */
