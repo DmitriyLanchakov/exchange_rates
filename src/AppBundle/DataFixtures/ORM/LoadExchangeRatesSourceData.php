@@ -28,7 +28,7 @@ class LoadExchangeRatesSourceData extends AbstractFixture
         $source = (new ExchangeRatesSource())
             ->setTitle('Центральный Банк Российской Федерации')
             ->setReceiveHandler(ExchangeRatesSourceReceiveHandlerType::CBR)
-            ->setReceiveUrl('http://test.local/api')
+            ->setReceiveUrl('http://www.cbr.ru/scripts/XML_daily.asp')
             ->setBaseCurrency($this->getReference('currency-643'));
         $manager->persist($source);
         $manager->flush($source);
@@ -37,7 +37,7 @@ class LoadExchangeRatesSourceData extends AbstractFixture
         $source = (new ExchangeRatesSource())
             ->setTitle('Национальный Банк Казахстана')
             ->setReceiveHandler(ExchangeRatesSourceReceiveHandlerType::NATIONAL_BANK_KZ)
-            ->setReceiveUrl('http://test.local/api')
+            ->setReceiveUrl('http://www.nationalbank.kz/rss/rates_all.xml')
             ->setBaseCurrency($this->getReference('currency-398'));
         $manager->persist($source);
         $manager->flush($source);
