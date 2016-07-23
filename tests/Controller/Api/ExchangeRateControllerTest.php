@@ -203,7 +203,6 @@ class ExchangeRateControllerTest extends WebTestCase
         );
 
         $response = $client->getResponse();
-//        echo $response->getContent();die;
         static::assertSame(Codes::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
     }
 
