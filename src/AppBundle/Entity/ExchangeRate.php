@@ -19,6 +19,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  name="exchange_rates",
  *  options={
  *      "comment"="Курсы валют"
+ *  },
+ *  indexes={
+ *      @ORM\Index(
+ *          name="created_at_index",
+ *          columns={"created_at"}
+ *      ),
+ *      @ORM\Index(
+ *          name="exchange_rates_source_id_to_currency_id_created_at_index",
+ *          columns={"exchange_rates_source_id", "to_currency_id", "created_at"}
+ *      )
  *  }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ExchangeRateRepository")
