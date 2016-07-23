@@ -4,7 +4,8 @@ Exchange Rates
 Агрегатор курсов валют с разных источников.
 
 Для загрузки курсов запустить:
-        $ bin/console rates:load
+
+    $ bin/console rates:load
 
 REST API по роутам:
 
