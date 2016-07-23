@@ -58,7 +58,6 @@ abstract class AbstractHandler
         $this->exchangeRatesSource = $exchangeRatesSource;
         $this->currencyManager = $currencyManager;
         $this->logger = $logger;
-        $this->httpClient = new Client;
     }
 
     /**
@@ -78,7 +77,7 @@ abstract class AbstractHandler
         );
 
         /** @var ResponseInterface $response */
-        $response = $this->httpClient->send($request);
+        $response = $this->getHttpClient()->send($request);
 
         $this->logger->info(
             sprintf('Response %s', static::class),
@@ -89,5 +88,19 @@ abstract class AbstractHandler
         );
 
         return $response;
+    }
+
+    /**
+     * Возвращает HTTP-клиент
+     *
+     * @return Client
+     */
+    protected function getHttpClient()
+    {
+        if (null === $this->httpClient) {
+            $this->httpClient = new Client();
+        }
+
+        return $this->httpClient;
     }
 }
