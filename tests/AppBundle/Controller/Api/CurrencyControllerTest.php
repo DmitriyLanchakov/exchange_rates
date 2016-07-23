@@ -7,7 +7,7 @@
  * @link https://github.com/rtretyakov/exchange_rates
  */
 
-namespace AppBundle\Tests\Controller;
+namespace Tests\AppBundle\Controller\Api;
 
 use AppBundle\DataFixtures\ORM\LoadCurrencyData;
 use FOS\RestBundle\Util\Codes;
