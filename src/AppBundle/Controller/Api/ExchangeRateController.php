@@ -24,6 +24,18 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
  */
 class ExchangeRateController extends AbstractController
 {
+    /**
+     * Возвращает курс
+     *
+     * @param ExchangeRate $rate Курс
+     *
+     * @return ExchangeRate
+     */
+    public function getAction(ExchangeRate $rate)
+    {
+        return $rate;
+    }
+    
     /** {@inheritdoc} */
     protected function getManager()
     {

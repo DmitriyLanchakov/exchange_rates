@@ -26,20 +26,6 @@ use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 abstract class AbstractController extends VoryxController
 {
     /**
-     * Возвращает ресурс
-     *
-     * @View(serializerEnableMaxDepthChecks=true)
-     *
-     * @param object $entity Сущность
-     *
-     * @return object
-     */
-    public function getAction($entity)
-    {
-        return $entity;
-    }
-
-    /**
      * Возвращает список ресурсов
      *
      * @View(serializerEnableMaxDepthChecks=true)
@@ -85,16 +71,16 @@ abstract class AbstractController extends VoryxController
 
             if (0 !== count($entities)) {
                 return $entities;
+            } else {
+                return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
             }
-
-            return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Создаёт ресурс
+     * Создаёт сущность
      *
      * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *
@@ -102,7 +88,7 @@ abstract class AbstractController extends VoryxController
      *
      * @return object|\FOS\RestBundle\View\View
      */
-    public function postAction(Request $request)
+    protected function createEntity(Request $request)
     {
         $entity = $this->getNewEntity();
 
@@ -115,13 +101,13 @@ abstract class AbstractController extends VoryxController
             $em->flush($entity);
 
             return $entity;
+        } else {
+            return FOSView::create(['errors' => $form->getErrors()], Codes::HTTP_BAD_REQUEST);
         }
-
-        return FOSView::create(['errors' => $form->getErrors()], Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
-     * Обновляет ресурс
+     * Обновляет сущность
      *
      * @View(serializerEnableMaxDepthChecks=true)
      *
@@ -130,7 +116,7 @@ abstract class AbstractController extends VoryxController
      *
      * @return object|\FOS\RestBundle\View\View
      */
-    public function putAction(Request $request, $entity)
+    protected function updateEntity(Request $request, $entity)
     {
         try {
             $request->setMethod('PATCH');
@@ -142,31 +128,16 @@ abstract class AbstractController extends VoryxController
                 $this->getDoctrine()->getManager()->flush($entity);
 
                 return $entity;
+            } else {
+                return FOSView::create(['errors' => $form->getErrors()], Codes::HTTP_BAD_REQUEST);
             }
-
-            return FOSView::create(['errors' => $form->getErrors()], Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Обновляет свойства ресурса
-     *
-     * @View(serializerEnableMaxDepthChecks=true)
-     *
-     * @param Request $request Запрос
-     * @param object $entity Сущность
-     *
-     * @return object|\FOS\RestBundle\View\View
-     */
-    public function patchAction(Request $request, $entity)
-    {
-        return $this->putAction($request, $entity);
-    }
-
-    /**
-     * Удаляет ресурс
+     * Удаляет сущность
      *
      * @View(statusCode=204)
      *
@@ -175,7 +146,7 @@ abstract class AbstractController extends VoryxController
      *
      * @return null|\FOS\RestBundle\View\View
      */
-    public function deleteAction(Request $request, $entity)
+    protected function deleteEntity(Request $request, $entity)
     {
         try {
             $em = $this->getDoctrine()->getManager();
