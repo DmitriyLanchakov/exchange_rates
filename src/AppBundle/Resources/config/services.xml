@@ -4,17 +4,26 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="app.manager.currency"
-                 class="AppBundle\Manager\CurrencyManager">
+        <service id="app.manager.abstract"
+                 class="AppBundle\Manager\AbstractManager"
+                 public="false"
+                 abstract="true">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+        <service id="app.manager.currency"
+                 class="AppBundle\Manager\CurrencyManager"
+                 public="true"
+                 parent="app.manager.abstract">
         </service>
         <service id="app.manager.exchange_rate"
-                 class="AppBundle\Manager\ExchangeRateManager">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+                 class="AppBundle\Manager\ExchangeRateManager"
+                 public="true"
+                 parent="app.manager.abstract">
         </service>
         <service id="app.manager.exchange_rates_source"
-                 class="AppBundle\Manager\ExchangeRatesSourceManager">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+                 class="AppBundle\Manager\ExchangeRatesSourceManager"
+                 public="true"
+                 parent="app.manager.abstract">
         </service>
     </services>
 
