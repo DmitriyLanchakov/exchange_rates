@@ -74,7 +74,7 @@ class ExchangeRateControllerTest extends WebTestCase
                     'exchange_rates_source' => [
                         'id' => 1,
                         'title' => 'Центральный Банк Российской Федерации',
-                        'receive_url' => 'http://test.local/api',
+                        'receive_url' => 'http://www.cbr.ru/scripts/XML_daily.asp',
                         'receive_handler' => ExchangeRatesSourceReceiveHandlerType::CBR,
                         'base_currency' => [
                             'id' => 643,
@@ -115,7 +115,7 @@ class ExchangeRateControllerTest extends WebTestCase
                     'exchange_rates_source' => [
                         'id' => 1,
                         'title' => 'Центральный Банк Российской Федерации',
-                        'receive_url' => 'http://test.local/api',
+                        'receive_url' => 'http://www.cbr.ru/scripts/XML_daily.asp',
                         'receive_handler' => ExchangeRatesSourceReceiveHandlerType::CBR,
                         'base_currency' => [
                             'id' => 643,
@@ -133,7 +133,7 @@ class ExchangeRateControllerTest extends WebTestCase
                     'exchange_rates_source' => [
                         'id' => 1,
                         'title' => 'Центральный Банк Российской Федерации',
-                        'receive_url' => 'http://test.local/api',
+                        'receive_url' => 'http://www.cbr.ru/scripts/XML_daily.asp',
                         'receive_handler' => ExchangeRatesSourceReceiveHandlerType::CBR,
                         'base_currency' => [
                             'id' => 643,
@@ -151,7 +151,7 @@ class ExchangeRateControllerTest extends WebTestCase
                     'exchange_rates_source' => [
                         'id' => 2,
                         'title' => 'Национальный Банк Казахстана',
-                        'receive_url' => 'http://test.local/api',
+                        'receive_url' => 'http://www.nationalbank.kz/rss/rates_all.xml',
                         'receive_handler' => ExchangeRatesSourceReceiveHandlerType::NATIONAL_BANK_KZ,
                         'base_currency' => [
                             'id' => 398,
@@ -169,7 +169,7 @@ class ExchangeRateControllerTest extends WebTestCase
                     'exchange_rates_source' => [
                         'id' => 2,
                         'title' => 'Национальный Банк Казахстана',
-                        'receive_url' => 'http://test.local/api',
+                        'receive_url' => 'http://www.nationalbank.kz/rss/rates_all.xml',
                         'receive_handler' => ExchangeRatesSourceReceiveHandlerType::NATIONAL_BANK_KZ,
                         'base_currency' => [
                             'id' => 398,
